@@ -20,9 +20,8 @@ for i in range (era * points_counter):
     x2.append(second_number)
 
 for i in range (1 , era + 1):
-    print("Epoka nr" + str(i))
     for j in range (points_counter):
         perceptron.train(x1[j*i], x2[j*i])
-        perceptron.display(x1[j*i],x2[j*i])
-#for i in range (30):
- #   perceptron.display(x1[i],x2[i])
+
+for i in range (era * points_counter):
+    perceptron.display(x1[i],x2[i])
