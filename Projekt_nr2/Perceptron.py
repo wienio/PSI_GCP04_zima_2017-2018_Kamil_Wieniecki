@@ -17,16 +17,16 @@ class Perceptron:
             return 0
         return 1
 
-    def sum(self, tab):
+    def sum(self, vector):
         "Sumowanie wag"
         y_p = 0
         for i in range(0, self.inputs):
-            y_p += tab[i] + self.weights[i]
+            y_p += vector[i] + self.weights[i]
 
         return self.activation(y_p)
 
-    def learn(self, tab, y_value, learning_rate):
+    def learn(self, vector, y_value, learning_rate):
         "Uczenie"
-        y_p = sum(self, tab)
+        y_p = sum(self, vector)
         for i in range(0, self.inputs):
-            self.weights[i] += (y_value - y_p) * learning_rate * tab[i]
+            self.weights[i] += (y_value - y_p) * learning_rate * vector[i]
