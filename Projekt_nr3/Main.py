@@ -10,17 +10,23 @@ from TestData import *
 fill_test_input(0.5)
 fill_random_test_input(1000)
 
-LAYERS = [30, 30, 1]
-LEARNING_RATE = 0.001
+LAYERS = [30, 30, 30, 1]
+LEARNING_RATE = 0.4
+BATCH_SIZE = 20
+ERAS = 100000
 DECAY = 0
 MODEL = Sequential()
 
-TENSORBOARD = TensorBoard(log_dir='./logs',
+LOG_DIR = "./logs-lr" + str(LEARNING_RATE) + "-lay"
+for lay in LAYERS:
+    LOG_DIR += "-" + str(lay)
+
+TENSORBOARD = TensorBoard(log_dir=LOG_DIR,
                           histogram_freq=5,
-                          batch_size=32,
+                          batch_size=100,
                           write_graph=True,
                           write_grads=False,
-                          write_images=False,
+                          write_images=True,
                           embeddings_freq=0,
                           embeddings_layer_names=None,
                           embeddings_metadata=None
@@ -34,13 +40,13 @@ for i in range(0, len(LAYERS)):
     else:
         MODEL.add(Dense(LAYERS[i], activation="sigmoid"))
 
-ADAM = optimizers.Adam(lr=LEARNING_RATE, beta_1=0.9, beta_2=0.999, epsilon=1e-8, decay=DECAY)
+ADAM = optimizers.Adam(lr=LEARNING_RATE, beta_1=0.9, beta_2=0.999, epsilon=1e-08, decay=DECAY)
 MODEL.compile(loss='mean_squared_error', optimizer=ADAM, metrics=['accuracy'])
 
 MODEL.fit(  test_input,
             test_output,
-            epochs=100,
-            batch_size=20,
+            epochs=ERAS,
+            batch_size=BATCH_SIZE,
             validation_data=(random_input, random_output),
             callbacks=[TENSORBOARD]
             )
