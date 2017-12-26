@@ -11,11 +11,12 @@ class Hebb:
         self.weights = []
         for i in range(0, inputs):
             self.weights.append(uniform(0, 1))
+        self.normalize_weights()
 
     @staticmethod
     def activation(y_p):
         "Funkcja aktywacji"
-        return (1.0 / 1 + math.pow(math.e, - y_p))
+        return (1.0 / (1 + math.pow(math.e, - y_p)))
 
     def sum(self, vector):
         "Sumator"
@@ -35,6 +36,9 @@ class Hebb:
             else:
                 self.weights[i] += learning_rate * vector[i] * y_p
 
+        self.normalize_weights()
+        return self.activation(self.sum(vector))
+
     def test(self, vector):
         "Funkcja testujaca i zwracajaca wynik z neuronu"
         return self.activation(self.sum(vector))
@@ -44,7 +48,7 @@ class Hebb:
         dl = 0
         for i in range(0, self.inputs):
             dl += math.pow(self.weights[i], 2)
-        
+
         dl = math.sqrt(dl)
         for i in range(0, self.inputs):
             if self.weights[i] > 0 and dl != 0:
