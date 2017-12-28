@@ -8,13 +8,12 @@ HEBB_WITHOUT_FORGETTING = False
 
 def learn(hebbs):
     "Funkcja uczenia"
-    counter = 0
-    limit = 1000
+    era = 0
     winners = []
     for i in range(0, NEURONS):
         winners.append(-1)
 
-    while unique(winners) == False:
+    while unique(winners) != True:
         for i in range(0, NEURONS):
             for j in range(0, EMOJI):
                 hebbs[i].learn_without_supervising(emoji[j], LEARNING_RATE, FORGETTING_RATE, HEBB_FORGETTING)
@@ -22,15 +21,14 @@ def learn(hebbs):
             for j in range(0, EMOJI):
                 winners[j] = test_hebb(hebbs, emoji[j])
 
-        counter += 1
-        if counter == limit:
+        era += 1
+        if era == LIMIT:
             break
 
-    return counter
+    return era
 
 def unique(winners):
     "Funkcja sprawdza czy elementy w tablicy sa unikalne, pomoc w nauce"
-    print(winners)
     for i in range(0, NEURONS):
         for j in range(0, NEURONS):
             if i != j:
@@ -50,23 +48,20 @@ def test_hebb(hebbs, emoji):
 
     return winner
 
-
-
 ## Dane wejsciowe
-
-INPUTS = 65
-LEARNING_RATE = 0.01
-FORGETTING_RATE = LEARNING_RATE / 6.0
+INPUTS = 82
+LEARNING_RATE = 0.3
+FORGETTING_RATE = LEARNING_RATE / 3.0
 NEURONS = 5
 EMOJI = 4
+LIMIT = 1000
 
+print("lr =", LEARNING_RATE, "forgetting=", FORGETTING_RATE)
 HEBBS = []
 for i in range(0, NEURONS):
     HEBBS.append(Hebb(INPUTS))
 
 ERAS = learn(HEBBS)
-
-## po nauce
 
 print("Po nauce")
 for i in range(0, EMOJI):
