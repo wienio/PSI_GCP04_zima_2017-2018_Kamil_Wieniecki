@@ -2,6 +2,11 @@ from openpyxl import load_workbook
 from math import pow
 from math import sqrt
 
+### rekordy w excelu ###
+### 1-50 ---> setosa
+### 51-100 ---> versicolor
+### 101-150 ---> virginica
+
 workbook = load_workbook('./Iris.xlsx', data_only=True)
 sheet = workbook.get_sheet_names()[0]
 worksheet = workbook.get_sheet_by_name(sheet)
@@ -15,10 +20,8 @@ def normalize(array, number):
 
 list = []
 for row in worksheet.iter_rows():
-    list.append(float(row[0].value))
-    list.append(float(row[1].value))
-    list.append(float(row[2].value))
-    list.append(float(row[3].value))
+    for i in range(0, len(row)):
+        list.append(row[i].value)
     text_file.write("[ ")
     for i in range(0, 4):
         result = normalize(list, list[i])
@@ -27,6 +30,5 @@ for row in worksheet.iter_rows():
             text_file.write(", ")
     text_file.write(" ],\n")
     list.clear()
-
 
 text_file.close()
