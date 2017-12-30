@@ -51,7 +51,6 @@ def get_winner(kohonens, vector):
     winner = 0
     minimum_distance = vector_distance(kohonens[0].weights, vector)
 
-    # od 0 albo od 1 ?
     for i in range(1, NEURONS):
         current_distance = vector_distance(kohonens[i].weights, vector)
         if  current_distance < minimum_distance:
