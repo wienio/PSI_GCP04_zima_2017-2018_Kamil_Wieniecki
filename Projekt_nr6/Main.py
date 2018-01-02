@@ -60,13 +60,13 @@ def vector_distance(vector1, vector2):
 
 ### Dane wejściowe
 
-LEARNING_RATE = 0.1
+LEARNING_RATE = 0.3
 INPUTS = 35
-NEURONS = 400
+NEURONS = 20000
 LEARN_SAMPLES = 20
 TEST_SAMPLES = 20
-LIMIT = 1000
-NEIGHBOURHOOD_RADIUS = 5
+LIMIT = 3500
+NEIGHBOURHOOD_RADIUS = 6.0
 
 kohonens  = []
 for i in range(0, NEURONS):
